@@ -1,0 +1,20 @@
+{
+  "name": "stantabcorp/validator",
+  "description": "A PHP Validation library",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Stantabcorp\\Validator\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Thibault JUNIN",
+      "email": "thibault@stantabcorp.com"
+    }
+  ],
+  "require": {
+    "adbario/php-dot-notation": "^2.2"
+  }
+}
