@@ -8,6 +8,10 @@
       "Stantabcorp\\Validator\\": "src/"
     }
   },
+  "scripts": {
+    "test": "vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never",
+    "debug": "vendor/bin/phpunit --configuration phpunit.xml"
+  },
   "authors": [
     {
       "name": "Thibault JUNIN",
@@ -15,6 +19,10 @@
     }
   ],
   "require": {
+    "php": ">=7.4",
     "adbario/php-dot-notation": "^2.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
   }
 }

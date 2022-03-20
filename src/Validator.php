@@ -194,7 +194,7 @@ class Validator
     }
 
     /**
-     * Test if the key match the provided regex expression
+     * Test if the key match the provided value
      *
      * @param string $key
      * @param null|mixed $expected
