@@ -9,6 +9,10 @@ class ValidationError
     private string $rule;
     private array $attributes;
 
+    private array $messages = [
+
+    ];
+
     /**
      * @param string $key
      * @param string $rule
@@ -19,6 +23,11 @@ class ValidationError
         $this->key = $key;
         $this->rule = $rule;
         $this->attributes = $attributes;
+    }
+
+    public function __toString()
+    {
+        return sprintf($this->messages[$this->rule], ...$this->attributes);
     }
 
     /**
