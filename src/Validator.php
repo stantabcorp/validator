@@ -83,7 +83,7 @@ class Validator
     public function notEmpty(string ...$keys): self
     {
         foreach ($keys as $key) {
-            if (is_null($this->getValue($key)) && empty($this->getValue($key))) {
+            if (!is_null($this->getValue($key)) && empty($this->getValue($key))) {
                 $this->addError($key, ValidationRules::NOT_EMPTY);
             }
         }

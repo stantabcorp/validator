@@ -5,7 +5,7 @@ namespace Stantabcorp\Validator;
 class CustomValidator
 {
 
-    private array $errors;
+    private array $errors = [];
 
     public function addError(string $message)
     {

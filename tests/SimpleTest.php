@@ -51,7 +51,7 @@ class SimpleTest extends TestCase
         $this->assertCount(0, $validator->getErrors());
 
         $validator = $this->createValidator(["abc" => "abcdefghi"]);
-        $validator->notEmpty("abc", 2, 4);
+        $validator->length("abc", 2, 4);
         $this->assertCount(1, $validator->getErrors());
     }
 
@@ -123,7 +123,7 @@ class SimpleTest extends TestCase
 
     public function testArray()
     {
-        $validator = $this->createValidator(["abc" => []]);
+        $validator = $this->createValidator(["abc" => ["some" => "content"]]);
         $validator->array("abc");
         $this->assertCount(0, $validator->getErrors());
 
@@ -190,13 +190,13 @@ class SimpleTest extends TestCase
     public function testCustomValidation()
     {
         $validator = $this->createValidator(["abc" => "random"]);
-        $validator->customValidation("abc", function (CustomValidator $customValidator) {
+        $validator->customValidation("abc", function ($value, CustomValidator $customValidator) {
 
         });
         $this->assertCount(0, $validator->getErrors());
 
         $validator = $this->createValidator(["abc" => "random"]);
-        $validator->customValidation("abc", function (CustomValidator $customValidator) {
+        $validator->customValidation("abc", function ($value, CustomValidator $customValidator) {
             $customValidator->addError("random");
         });
         $this->assertCount(1, $validator->getErrors());
