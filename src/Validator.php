@@ -271,7 +271,7 @@ class Validator
     public function array(string ...$keys): self
     {
         foreach ($keys as $key) {
-            if (!is_array($this->getValue($key))) {
+            if (!empty($this->getValue($key)) && !is_array($this->getValue($key))) {
                 $this->addError($key, ValidationRules::ARRAY);
             }
         }
