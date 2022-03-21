@@ -64,6 +64,27 @@ class Validator
     }
 
     /**
+     * @param string $key
+     * @return mixed|null
+     */
+    public function getValue(string $key, $default = null)
+    {
+        $dot = new Dot($this->body);
+        return $dot->get($key, $default);
+    }
+
+    /**
+     * @param string $key
+     * @param string $rule
+     * @param ...$attributes
+     * @return void
+     */
+    private function addError(string $key, string $rule, ...$attributes)
+    {
+        $this->errors[] = new ValidationError($key, $rule, $attributes);
+    }
+
+    /**
      * Test if the keys are present (required) and not empty
      *
      * @param string ...$keys
@@ -235,7 +256,7 @@ class Validator
     {
         foreach ($keys as $key) {
             /** @var TYPE_NAME $this */
-            $this->patternMatch($key, "/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/");
+            $this->patternMatch($key, "/[a-z0-9!#$%&'*+\/\=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/\=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/");
         }
 
         return $this;
@@ -250,7 +271,7 @@ class Validator
     public function array(string ...$keys): self
     {
         foreach ($keys as $key) {
-            if (!is_array($key)) {
+            if (!is_array($this->getValue($key))) {
                 $this->addError($key, ValidationRules::ARRAY);
             }
         }
@@ -379,34 +400,13 @@ class Validator
      */
     public function customValidation(string $key, callable $function): self
     {
-        $customValidator = new CustomValidator();
-        $function($this->getValue($key), $customValidator);
+        $customValidator = new CustomValidator($key, $this->getValue($key));
+        $function($customValidator);
 
         foreach ($customValidator->getErrors() as $error) {
             $this->addError($key, ValidationRules::CUSTOM, $error);
         }
 
         return $this;
-    }
-
-    /**
-     * @param string $key
-     * @return mixed|null
-     */
-    public function getValue(string $key, $default = null)
-    {
-        $dot = new Dot($this->body);
-        return $dot->get($key, $default);
-    }
-
-    /**
-     * @param string $key
-     * @param string $rule
-     * @param ...$attributes
-     * @return void
-     */
-    private function addError(string $key, string $rule, ...$attributes)
-    {
-        $this->errors[] = new ValidationError($key, $rule, $attributes);
     }
 }

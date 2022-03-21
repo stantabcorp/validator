@@ -13,7 +13,7 @@ class ValidationError
         ValidationRules::NOT_NULL => "The field %s cannot be null",
         ValidationRules::REQUIRED => "The field %s is required",
         ValidationRules::NOT_EMPTY => "The field %s cannot be empty",
-        ValidationRules::LENGTH => "The field %s must contain more than %d characters and less than %d.",
+        ValidationRules::LENGTH => "The field %s must contain more than %s characters and less than %s.",
         ValidationRules::DATE_TIME => "The field %s must be a valid date (Format: %s)",
         ValidationRules::MATCH => "The field %s must be equal to the value of %s",
         ValidationRules::EQUAL => "The field %s must be equal to %s",
@@ -38,7 +38,7 @@ class ValidationError
 
     public function __toString()
     {
-        return sprintf($this->messages[$this->rule], ...$this->attributes);
+        return sprintf($this->messages[$this->rule], $this->key, ...$this->attributes);
     }
 
     /**
