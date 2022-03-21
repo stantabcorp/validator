@@ -2,7 +2,7 @@
 
 A simple PHP validation library
 
-[![PHP Composer](https://github.com/stantabcorp/validator/actions/workflows/php.yml/badge.svg)](https://github.com/stantabcorp/validator/actions/workflows/php.yml)
+[![PHP Composer](https://github.com/stantabcorp/validator/actions/workflows/php.yml/badge.svg?branch=main)](https://github.com/stantabcorp/validator/actions/workflows/php.yml)
 
 ## Installation
 
