@@ -13,7 +13,7 @@ composer require stantabcorp/validator
 ## Using the library
 
 ```php
-$validator = new Stantabcorp\Validator\Validator(["array" => ["to" => "validate"]]); // Init the library providing an array to validate.
+$validator = new \Stantabcorp\Validator\Validator(["array" => ["to" => "validate"]]); // Init the library providing an array to validate.
 $validator->required("array.to"); // Test if the key `to` in the array `array` is present.
 $validator->array("array"); // Test if the key `array` is an array.
 
