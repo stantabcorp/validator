@@ -2,9 +2,21 @@
 
 use PHPUnit\Framework\TestCase;
 use Stantabcorp\Validator\CustomValidator;
+use Stantabcorp\Validator\Validator;
 
 class SimpleTest extends TestCase
 {
+
+    public function testConstructor()
+    {
+        $validator = $this->createValidator([]); // Empty array, everything should fail
+        $validator->notNull("abc");
+        $this->assertCount(1, $validator->getErrors());
+
+        $validator = $this->createValidator(null); // Null body, everything should fail
+        $validator->notNull("abc");
+        $this->assertCount(1, $validator->getErrors());
+    }
 
     public function testNotNull()
     {
@@ -17,7 +29,7 @@ class SimpleTest extends TestCase
         $this->assertCount(1, $validator->getErrors());
     }
 
-    private function createValidator(array $body)
+    private function createValidator(?array $body): Validator
     {
         return new Stantabcorp\Validator\Validator($body);
     }

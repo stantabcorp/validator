@@ -20,10 +20,13 @@ class Validator
     private array $errors = [];
 
     /**
-     * @param array $body
+     * @param array|null $body
      */
-    public function __construct(array $body)
+    public function __construct(?array $body)
     {
+        if ($body == null) {
+            $body = [];
+        }
         $this->body = $body;
     }
 
