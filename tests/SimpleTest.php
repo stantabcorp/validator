@@ -61,6 +61,10 @@ class SimpleTest extends TestCase
         $validator->dateTime("abc");
         $this->assertCount(0, $validator->getErrors(), json_encode($validator->getErrors()));
 
+        $validator = $this->createValidator(["abc" => "2022-03-22"]);
+        $validator->dateTime("abc", "Y-m-d");
+        $this->assertCount(0, $validator->getErrors(), json_encode($validator->getErrors()));
+
         $validator = $this->createValidator(["abc" => "ABCD-EF-GH IJ:KL:MN"]);
         $validator->dateTime("abc");
         $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));

@@ -167,8 +167,7 @@ class Validator
      */
     public function dateTime(string $key, string $format = 'Y-m-d H:i:s'): self
     {
-        if ($this->getValue($key) == null) {
-            $this->addError($key, ValidationRules::DATE_TIME, $format);
+        if (empty($this->getValue($key))) {
             return $this;
         }
 
@@ -321,16 +320,16 @@ class Validator
     {
         foreach ($keys as $key) {
             $value = $this->getValue($key);
-            if (!(
-                ($value === false)
-                || ($value === true)
-                || ($value === 'false')
-                || ($value === 'true')
-                || ($value === 0)
-                || ($value === 1)
-                || ($value === '0')
-                || ($value === '1')
-            )) { // https://github.com/lefuturiste/validator/blob/9e4e653597437acb277b48167ebd6acbaef65a8f/src/Validator.php#L313
+            if ($value !== null && !(
+                    ($value === false)
+                    || ($value === true)
+                    || ($value === 'false')
+                    || ($value === 'true')
+                    || ($value === 0)
+                    || ($value === 1)
+                    || ($value === '0')
+                    || ($value === '1')
+                )) { // https://github.com/lefuturiste/validator/blob/9e4e653597437acb277b48167ebd6acbaef65a8f/src/Validator.php#L313
                 $this->addError($key, ValidationRules::BOOLEAN);
             }
         }
