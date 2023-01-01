@@ -39,7 +39,7 @@ class ValidationError
     public function __toString()
     {
         if ($this->rule == ValidationRules::CUSTOM) {
-            return sprintf($this->messages[$this->rule], ...$this->attributes);
+            return sprintf($this->messages[$this->rule], $this->attributes[0]);
         }
         return sprintf($this->messages[$this->rule], $this->key, ...$this->attributes);
     }

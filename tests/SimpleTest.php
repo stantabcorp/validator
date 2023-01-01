@@ -216,6 +216,7 @@ class SimpleTest extends TestCase
             $customValidator->addError("random");
         });
         $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
+        $this->assertEquals("random", $validator->getErrors()[0], json_encode($validator->getErrors()));
     }
 
 }
