@@ -5,17 +5,18 @@ namespace Stantabcorp\Validator;
 class ValidationRules
 {
 
-    const NOT_NULL = "not-null";
-    const REQUIRED = "required";
-    const NOT_EMPTY = "not-empty";
-    const LENGTH = "length";
-    const DATE_TIME = "date-time";
-    const MATCH = "match";
-    const EQUAL = "equal";
     const ARRAY = "array";
-    const BOOLEAN = "boolean";
     const BETWEEN = "between";
-    const PATTERN = "pattern";
+    const BOOLEAN = "boolean";
     const CUSTOM = "custom";
+    const DATE_TIME = "date-time";
+    const EQUAL = "equal";
+    const LENGTH = "length";
+    const LIST = "list";
+    const MATCH = "match";
+    const NOT_EMPTY = "not-empty";
+    const NOT_NULL = "not-null";
+    const PATTERN = "pattern";
+    const REQUIRED = "required";
 
 }

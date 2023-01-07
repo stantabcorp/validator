@@ -18,6 +18,7 @@ class ValidationError
         ValidationRules::MATCH => "The field %s must be equal to the value of %s",
         ValidationRules::EQUAL => "The field %s must be equal to %s",
         ValidationRules::ARRAY => "The field %s must be an array",
+        ValidationRules::LIST => "The field %s must be a list",
         ValidationRules::BOOLEAN => "The field %s must be a boolean",
         ValidationRules::BETWEEN => "The field %s must contain between %d and %d characters",
         ValidationRules::PATTERN => "The field %s must follow the following pattern %s",
@@ -27,7 +28,7 @@ class ValidationError
     /**
      * @param string $key
      * @param string $rule
-     * @param array $attributes
+     * @param array  $attributes
      */
     public function __construct(string $key, string $rule, array $attributes)
     {

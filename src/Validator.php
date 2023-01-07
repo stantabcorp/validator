@@ -9,12 +9,14 @@ class Validator
 {
     /**
      * The body to validate
+     *
      * @var array
      */
     private array $body;
 
     /**
      * List of errors that occurred during the validation
+     *
      * @var ValidationError[]
      */
     private array $errors = [];
@@ -24,7 +26,7 @@ class Validator
      */
     public function __construct(?array $body)
     {
-        if ($body == null) {
+        if ($body == NULL) {
             $body = [];
         }
         $this->body = $body;
@@ -39,27 +41,16 @@ class Validator
     }
 
     /**
-     * @return string[]
-     */
-    public function getErrors(): array
-    {
-        $errors = [];
-        foreach ($this->errors as $error) {
-            $errors[] = (string)$error;
-        }
-        return $errors;
-    }
-
-    /**
      * Test if the keys are not null
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function notNull(string  ...$keys): self
     {
         foreach ($keys as $key) {
-            if ($this->getValue($key) == null) {
+            if ($this->getValue($key) == NULL) {
                 $this->addError($key, ValidationRules::NOT_NULL);
             }
         }
@@ -68,9 +59,10 @@ class Validator
 
     /**
      * @param string $key
+     *
      * @return mixed|null
      */
-    public function getValue(string $key, $default = null)
+    public function getValue(string $key, $default = NULL)
     {
         $dot = new Dot($this->body);
         return $dot->get($key, $default);
@@ -79,7 +71,8 @@ class Validator
     /**
      * @param string $key
      * @param string $rule
-     * @param ...$attributes
+     * @param        ...$attributes
+     *
      * @return void
      */
     private function addError(string $key, string $rule, ...$attributes)
@@ -91,6 +84,7 @@ class Validator
      * Test if the keys are present (required) and not empty
      *
      * @param string ...$keys
+     *
      * @return Validator
      */
     public function requiredAndNotEmpty(string ...$keys): self
@@ -102,6 +96,7 @@ class Validator
      * Test if the keys are not empty
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function notEmpty(string ...$keys): self
@@ -118,6 +113,7 @@ class Validator
      * Test if the keys are present (required)
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function required(string ...$keys): self
@@ -134,16 +130,17 @@ class Validator
     /**
      * Test if the key is the correct length
      *
-     * @param string $key
-     * @param int $min
+     * @param string   $key
+     * @param int      $min
      * @param int|null $max
+     *
      * @return $this
      */
     public function length(string $key, int $min, ?int $max = NULL): self
     {
         $value = $this->getValue($key);
 
-        if ($value == null) {
+        if ($value == NULL) {
             $this->addError($key, ValidationRules::LENGTH, $min, $max);
             return $this;
         }
@@ -153,7 +150,7 @@ class Validator
             return $this;
         }
 
-        if ($max != null && strlen($value) > $max) {
+        if ($max != NULL && strlen($value) > $max) {
             $this->addError($key, ValidationRules::LENGTH, $min, $max);
             return $this;
         }
@@ -166,6 +163,7 @@ class Validator
      *
      * @param string $key
      * @param string $format
+     *
      * @return $this
      */
     public function dateTime(string $key, string $format = 'Y-m-d H:i:s'): self
@@ -177,7 +175,7 @@ class Validator
         // https://github.com/lefuturiste/validator/blob/9e4e653597437acb277b48167ebd6acbaef65a8f/src/Validator.php#L134
         $date = DateTime::createFromFormat($format, $this->getValue($key));
         $errors = DateTime::getLastErrors();
-        if ($errors['error_count'] > 0 || $errors['warning_count'] > 0 || $date == false) {
+        if (($errors && ($errors['error_count'] > 0 || $errors['warning_count'] > 0)) || !$date) {
             $this->addError($key, ValidationRules::DATE_TIME, $format);
         }
 
@@ -188,6 +186,7 @@ class Validator
      * Test if the keys are valid slugs
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function slug(string ...$keys): self
@@ -201,9 +200,26 @@ class Validator
     }
 
     /**
+     * Test if the key match the provided regex expression
+     *
+     * @param string $key
+     * @param string $pattern
+     *
+     * @return $this
+     */
+    public function patternMatch(string $key, string $pattern): self
+    {
+        if ($this->getValue($key) != NULL && !preg_match($pattern, $this->getValue($key))) {
+            $this->addError($key, ValidationRules::PATTERN, $pattern);
+        }
+        return $this;
+    }
+
+    /**
      * Test if the keys are valid urls
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function url(string ...$keys): self
@@ -219,8 +235,9 @@ class Validator
     /**
      * Test if the key match the provided value
      *
-     * @param string $key
+     * @param string     $key
      * @param null|mixed $expected
+     *
      * @return $this
      */
     public function match(string $key, $expected): self
@@ -237,6 +254,7 @@ class Validator
      *
      * @param string $key
      * @param string $secondKey
+     *
      * @return $this
      */
     public function equal(string $key, string $secondKey): self
@@ -252,6 +270,7 @@ class Validator
      * Test if the key is a valid email address
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function email(string ...$keys): self
@@ -268,6 +287,7 @@ class Validator
      * Test if the keys are valid arrays
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function array(string ...$keys): self
@@ -285,6 +305,7 @@ class Validator
      * Test if the keys are valid integers
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function integer(string ...$keys): self
@@ -301,6 +322,7 @@ class Validator
      * Test if the keys are valid float numbers
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function float(string ...$keys): self
@@ -317,13 +339,14 @@ class Validator
      * Test if the keys are valid booleans
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function boolean(string ...$keys): self
     {
         foreach ($keys as $key) {
             $value = $this->getValue($key);
-            if ($value !== null && !(
+            if ($value !== NULL && !(
                     ($value === false)
                     || ($value === true)
                     || ($value === 'false')
@@ -344,9 +367,10 @@ class Validator
      * Test if the key is between a provided range
      *
      * @param string $key
-     * @param int $min
-     * @param int $max
-     * @param bool $strict
+     * @param int    $min
+     * @param int    $max
+     * @param bool   $strict
+     *
      * @return $this
      */
     public function between(string $key, int $min, int $max, bool $strict = false): self
@@ -364,24 +388,10 @@ class Validator
     }
 
     /**
-     * Test if the key match the provided regex expression
-     *
-     * @param string $key
-     * @param string $pattern
-     * @return $this
-     */
-    public function patternMatch(string $key, string $pattern): self
-    {
-        if ($this->getValue($key) != null && !preg_match($pattern, $this->getValue($key))) {
-            $this->addError($key, ValidationRules::PATTERN, $pattern);
-        }
-        return $this;
-    }
-
-    /**
      * Test if the key is an alphanumerical value
      *
      * @param string ...$keys
+     *
      * @return $this
      */
     public function alphaNumerical(string ...$keys): self
@@ -396,8 +406,9 @@ class Validator
     /**
      * Test the key against a custom validation function
      *
-     * @param string $key
+     * @param string   $key
      * @param callable $function
+     *
      * @return $this
      */
     public function customValidation(string $key, callable $function): self
@@ -410,5 +421,26 @@ class Validator
         }
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getErrors(): array
+    {
+        $errors = [];
+        foreach ($this->errors as $error) {
+            $errors[] = (string)$error;
+        }
+        return $errors;
+    }
+
+    public function isList(string ...$keys)
+    {
+        foreach ($keys as $key) {
+            if (!empty($this->getValue($key)) && !array_is_list($this->getValue($key))) {
+                $this->addError($key, ValidationRules::LIST);
+            }
+        }
     }
 }
