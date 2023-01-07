@@ -175,7 +175,7 @@ class Validator
         // https://github.com/lefuturiste/validator/blob/9e4e653597437acb277b48167ebd6acbaef65a8f/src/Validator.php#L134
         $date = DateTime::createFromFormat($format, $this->getValue($key));
         $errors = DateTime::getLastErrors();
-        if ($errors || !$date) {
+        if (($errors && ($errors['error_count'] > 0 || $errors['warning_count'] > 0)) || !$date) {
             $this->addError($key, ValidationRules::DATE_TIME, $format);
         }
 
