@@ -13,7 +13,7 @@ class SimpleTest extends TestCase
         $validator->notNull("abc");
         $this->assertCount(1, $validator->getErrors());
 
-        $validator = $this->createValidator(null); // Null body, everything should fail
+        $validator = $this->createValidator(NULL); // Null body, everything should fail
         $validator->notNull("abc");
         $this->assertCount(1, $validator->getErrors());
     }
@@ -24,7 +24,7 @@ class SimpleTest extends TestCase
         $validator->notNull("abc");
         $this->assertCount(0, $validator->getErrors());
 
-        $validator = $this->createValidator(["abc" => null]);
+        $validator = $this->createValidator(["abc" => NULL]);
         $validator->notNull("abc");
         $this->assertCount(1, $validator->getErrors());
     }
@@ -217,6 +217,17 @@ class SimpleTest extends TestCase
         });
         $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
         $this->assertEquals("random", $validator->getErrors()[0], json_encode($validator->getErrors()));
+    }
+
+    public function testList()
+    {
+        $validator = $this->createValidator(["abc" => ["abc", "def"]]);
+        $validator->isList("abc");
+        $this->assertCount(0, $validator->getErrors(), json_encode($validator->getErrors()));
+
+        $validator = $this->createValidator(["abc" => ["abc" => "def", "foo" => "bar"]]);
+        $validator->isList("abc");
+        $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
     }
 
 }

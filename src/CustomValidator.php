@@ -11,7 +11,7 @@ class CustomValidator
 
     /**
      * @param string $key
-     * @param $value
+     * @param        $value
      */
     public function __construct(string $key, $value)
     {
