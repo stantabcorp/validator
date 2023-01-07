@@ -435,12 +435,20 @@ class Validator
         return $errors;
     }
 
-    public function isList(string ...$keys)
+    /**
+     * Test if the key is a list
+     *
+     * @param string ...$keys
+     *
+     * @return $this
+     */
+    public function list(string ...$keys)
     {
         foreach ($keys as $key) {
             if (!empty($this->getValue($key)) && !array_is_list($this->getValue($key))) {
                 $this->addError($key, ValidationRules::LIST);
             }
         }
+        return $this;
     }
 }

@@ -222,11 +222,11 @@ class SimpleTest extends TestCase
     public function testList()
     {
         $validator = $this->createValidator(["abc" => ["abc", "def"]]);
-        $validator->isList("abc");
+        $validator->list("abc");
         $this->assertCount(0, $validator->getErrors(), json_encode($validator->getErrors()));
 
         $validator = $this->createValidator(["abc" => ["abc" => "def", "foo" => "bar"]]);
-        $validator->isList("abc");
+        $validator->list("abc");
         $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
     }
 
