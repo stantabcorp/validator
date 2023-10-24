@@ -228,6 +228,10 @@ class SimpleTest extends TestCase
         $validator = $this->createValidator(["abc" => ["abc" => "def", "foo" => "bar"]]);
         $validator->list("abc");
         $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
+
+        $validator = $this->createValidator(["abc" => "str"]);
+        $validator->list("abc");
+        $this->assertCount(1, $validator->getErrors(), json_encode($validator->getErrors()));
     }
 
 }

@@ -445,7 +445,7 @@ class Validator
     public function list(string ...$keys)
     {
         foreach ($keys as $key) {
-            if (!empty($this->getValue($key)) && !array_is_list($this->getValue($key))) {
+            if (!empty($this->getValue($key)) && (!is_array($this->getValue($key)) || !array_is_list($this->getValue($key)))) {
                 $this->addError($key, ValidationRules::LIST);
             }
         }
