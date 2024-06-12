@@ -145,12 +145,19 @@ class Validator
             return $this;
         }
 
-        if (strlen($value) < $min) {
+        $length = 0;
+        if (is_array($value)) {
+            $length = count($value);
+        } else {
+            $length = strlen($value);
+        }
+
+        if ($length < $min) {
             $this->addError($key, ValidationRules::LENGTH, $min, $max);
             return $this;
         }
 
-        if ($max != NULL && strlen($value) > $max) {
+        if ($max != NULL && $length > $max) {
             $this->addError($key, ValidationRules::LENGTH, $min, $max);
             return $this;
         }
